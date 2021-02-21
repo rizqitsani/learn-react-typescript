@@ -1,10 +1,12 @@
 import React from 'react';
 
+import { Code } from '@chakra-ui/react';
+
 const Text: React.FC = () => {
   return (
-    <p>
-      Edit <code>src/App.tsx</code> and save to reload.
-    </p>
+    <>
+      Edit <Code fontSize='xl'>src/App.tsx</Code> and save to reload.
+    </>
   );
 };
 
