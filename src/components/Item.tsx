@@ -1,30 +1,37 @@
 import React from 'react';
 
-import { Box, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text } from '@chakra-ui/react';
 
 import { ItemType } from '../types';
 
 const Item: React.FC<ItemType> = ({
-  id,
   title,
   price,
   description,
   image,
 }: ItemType) => {
   return (
-    <Box bg='gray.50' color='black' borderRadius='lg' overflow='hidden'>
+    <Flex
+      direction='column'
+      bg='gray.50'
+      color='black'
+      borderRadius='lg'
+      overflow='hidden'
+    >
       <Image src={image} w='100%' h='300px' objectFit='cover' />
-      <Box px={6} py={4}>
-        <Text fontSize='md' fontWeight='bold' mb={3}>
-          {id}. {title}
-        </Text>
-        <Text fontSize='sm' noOfLines={2} mb={4}>
-          {description}
-        </Text>
+      <Flex flex={1} direction='column' justify='space-between' px={6} py={4}>
+        <Box>
+          <Text fontSize='md' fontWeight='bold' mb={3}>
+            {title}
+          </Text>
+          <Text fontSize='sm' noOfLines={3} mb={4}>
+            {description}
+          </Text>
+        </Box>
         <Text fontSize='md' fontWeight='bold'>
           {`$${price}`}
         </Text>
-      </Box>
+      </Flex>
       <Box
         bg='teal.300'
         color='white'
@@ -37,7 +44,7 @@ const Item: React.FC<ItemType> = ({
           ADD TO CART
         </Text>
       </Box>
-    </Box>
+    </Flex>
   );
 };
 
