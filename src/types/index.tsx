@@ -7,3 +7,7 @@ export type ItemType = {
   image: string;
   amount: number;
 };
+
+export type InitialStateType = {
+  cartItems: ItemType[];
+};

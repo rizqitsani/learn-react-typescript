@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 
 import App from './App';
 import theme from './theme';
+import { CartProvider } from './context';
 
 const client = new QueryClient();
 
@@ -15,7 +16,9 @@ ReactDOM.render(
     <ColorModeScript initialColorMode={theme.config.initialColorMode} />
     <QueryClientProvider client={client}>
       <ChakraProvider theme={theme}>
-        <App />
+        <CartProvider>
+          <App />
+        </CartProvider>
       </ChakraProvider>
     </QueryClientProvider>
   </React.StrictMode>,
