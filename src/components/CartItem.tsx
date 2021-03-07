@@ -1,14 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import { Box, Flex, IconButton, Image, Text } from '@chakra-ui/react';
-import { FaMinus, FaPlus } from 'react-icons/fa';
+import { FaMinus, FaPlus, FaTrashAlt } from 'react-icons/fa';
 
 import { CartContext } from '../context';
 import { ItemType } from '../types';
 
+import DeleteDialog from './DeleteDialog';
+
 const CartItem: React.FC<ItemType> = (item: ItemType) => {
   const { dispatch } = useContext(CartContext);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const cancelRef = useRef<HTMLButtonElement>(null);
+
   const { title, price, image, amount } = item;
+
+  const handleCloseAlert = () => setIsAlertOpen(false);
 
   const handleAddAmount = () => {
     dispatch({ type: 'ADD_AMOUNT', payload: item });
@@ -38,11 +45,19 @@ const CartItem: React.FC<ItemType> = (item: ItemType) => {
           <Text fontSize='sm'>${price}</Text>
         </Box>
         <Flex justify='space-between' align='center'>
-          <IconButton
-            aria-label='Add item'
-            icon={<FaMinus />}
-            onClick={handleReduceAmount}
-          />
+          <Box>
+            <IconButton
+              aria-label='Remove from cart'
+              icon={<FaTrashAlt />}
+              onClick={() => setIsAlertOpen(true)}
+              mr={2}
+            />
+            <IconButton
+              aria-label='Add item'
+              icon={<FaMinus />}
+              onClick={handleReduceAmount}
+            />
+          </Box>
           <Text>{amount}</Text>
           <IconButton
             aria-label='Add item'
@@ -51,6 +66,13 @@ const CartItem: React.FC<ItemType> = (item: ItemType) => {
           />
         </Flex>
       </Flex>
+
+      <DeleteDialog
+        cancelRef={cancelRef}
+        isOpen={isAlertOpen}
+        item={item}
+        onClose={handleCloseAlert}
+      />
     </Flex>
   );
 };
