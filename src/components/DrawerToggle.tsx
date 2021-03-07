@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { IconButton } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import { FaShoppingCart } from 'react-icons/fa';
+
+import { CartContext } from '../context';
 
 type DrawerToggleProps = {
   onClick: () => void;
@@ -10,16 +12,21 @@ type DrawerToggleProps = {
 const DrawerToggle: React.FC<DrawerToggleProps> = (
   props: DrawerToggleProps,
 ) => {
+  const { state } = useContext(CartContext);
+
   return (
-    <IconButton
-      size='md'
-      fontSize='lg'
-      variant='ghost'
-      color='current'
-      icon={<FaShoppingCart />}
-      aria-label='Open cart'
-      {...props}
-    />
+    <Flex alignItems='center'>
+      <Button
+        size='md'
+        fontSize='lg'
+        variant='ghost'
+        color='current'
+        leftIcon={<FaShoppingCart />}
+        {...props}
+      >
+        <Text fontSize='sm'>{state.length}</Text>
+      </Button>
+    </Flex>
   );
 };
 

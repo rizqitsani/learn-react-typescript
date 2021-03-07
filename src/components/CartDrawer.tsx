@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import {
   Button,
@@ -13,6 +13,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 
+import { CartContext } from '../context';
+
 import CartItem from './CartItem';
 
 type CartDrawerProps = {
@@ -24,6 +26,12 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   isOpen,
   onClose,
 }: CartDrawerProps) => {
+  const { state } = useContext(CartContext);
+
+  const totalPrice = state.reduce((total, item) => {
+    return total + item.price * item.amount;
+  }, 0);
+
   return (
     <Drawer isOpen={isOpen} placement='right' onClose={onClose} size='sm'>
       <DrawerOverlay>
@@ -32,12 +40,22 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
           <DrawerCloseButton />
 
           <DrawerBody>
-            <CartItem />
-            <CartItem />
+            {state.map((item) => (
+              <CartItem
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                price={item.price}
+                description={item.description}
+                category={item.category}
+                image={item.image}
+                amount={item.amount}
+              />
+            ))}
             <Flex justify='space-between' align='center'>
               <Text color='gray.300'>Total</Text>
               <Text fontSize='lg' fontWeight='bold'>
-                $1234.56
+                ${totalPrice.toFixed(2)}
               </Text>
             </Flex>
           </DrawerBody>

@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Image, Text, useToast } from '@chakra-ui/react';
 
 import { ItemType } from '../types';
+import { CartContext } from '../context';
 
-const Item: React.FC<ItemType> = ({
-  title,
-  price,
-  description,
-  image,
-}: ItemType) => {
+const Item: React.FC<ItemType> = (item: ItemType) => {
+  const { state, dispatch } = useContext(CartContext);
+
+  const toast = useToast();
+
+  const { title, price, description, image } = item;
+
+  const handleAddToCart = () => {
+    if (state.some((el) => el.id === item.id)) {
+      toast({
+        title: 'You already have this item on your cart.',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'bottom-right',
+      });
+
+      return;
+    }
+
+    dispatch({ type: 'ADD_TO_CART', payload: item });
+  };
+
   return (
     <Flex
       direction='column'
@@ -38,6 +56,8 @@ const Item: React.FC<ItemType> = ({
         mb={0}
         px={6}
         py={3}
+        cursor='pointer'
+        onClick={handleAddToCart}
         _hover={{ bg: 'teal.500' }}
       >
         <Text align='center' fontSize='sm' fontWeight='bold'>
