@@ -30,7 +30,7 @@ export const cartReducer = (
         return item;
       });
     case 'REMOVE_FROM_CART':
-      return state;
+      return state.filter((item) => item.id !== action.payload.id);
     default:
       return state;
   }
