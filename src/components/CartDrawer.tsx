@@ -11,6 +11,7 @@ import {
   DrawerOverlay,
   Flex,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 import { CartContext } from '../context';
@@ -27,6 +28,8 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
   onClose,
 }: CartDrawerProps) => {
   const { state } = useContext(CartContext);
+
+  const totalColor = useColorModeValue('gray.700', 'gray.300');
 
   const totalPrice = state.reduce((total, item) => {
     return total + item.price * item.amount;
@@ -53,7 +56,7 @@ const CartDrawer: React.FC<CartDrawerProps> = ({
               />
             ))}
             <Flex justify='space-between' align='center'>
-              <Text color='gray.300'>Total</Text>
+              <Text color={totalColor}>Total</Text>
               <Text fontSize='lg' fontWeight='bold'>
                 ${totalPrice.toFixed(2)}
               </Text>

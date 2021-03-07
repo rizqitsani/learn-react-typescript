@@ -1,6 +1,13 @@
 import React, { useContext } from 'react';
 
-import { Box, Flex, Image, Text, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Image,
+  Text,
+  useToast,
+  useColorModeValue,
+} from '@chakra-ui/react';
 
 import { ItemType } from '../types';
 import { CartContext } from '../context';
@@ -8,6 +15,11 @@ import { CartContext } from '../context';
 const Item: React.FC<ItemType> = (item: ItemType) => {
   const { state, dispatch } = useContext(CartContext);
 
+  const background = useColorModeValue('gray.200', 'gray.50');
+  const border = useColorModeValue('1px solid', '');
+  const shadow = useColorModeValue('xl', '');
+  const buttonBackground = useColorModeValue('teal.500', 'teal.300');
+  const buttonHover = useColorModeValue({ bg: 'teal.700' }, { bg: 'teal.500' });
   const toast = useToast();
 
   const { title, price, description, image } = item;
@@ -31,9 +43,12 @@ const Item: React.FC<ItemType> = (item: ItemType) => {
   return (
     <Flex
       direction='column'
-      bg='gray.50'
-      color='black'
+      bg={background}
+      border={border}
+      borderColor='gray.200'
       borderRadius='lg'
+      color='black'
+      shadow={shadow}
       overflow='hidden'
     >
       <Image src={image} w='100%' h='300px' objectFit='cover' />
@@ -51,14 +66,14 @@ const Item: React.FC<ItemType> = (item: ItemType) => {
         </Text>
       </Flex>
       <Box
-        bg='teal.300'
+        bg={buttonBackground}
         color='white'
         mb={0}
         px={6}
         py={3}
         cursor='pointer'
         onClick={handleAddToCart}
-        _hover={{ bg: 'teal.500' }}
+        _hover={buttonHover}
       >
         <Text align='center' fontSize='sm' fontWeight='bold'>
           ADD TO CART
