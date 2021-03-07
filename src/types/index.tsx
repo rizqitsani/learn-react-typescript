@@ -8,6 +8,4 @@ export type ItemType = {
   amount: number;
 };
 
-export type InitialStateType = {
-  cartItems: ItemType[];
-};
+export type InitialStateType = ItemType[];

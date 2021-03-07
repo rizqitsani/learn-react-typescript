@@ -8,9 +8,7 @@ type CartProviderProps = {
   children: React.ReactNode;
 };
 
-const initialState = {
-  cartItems: [],
-};
+const initialState: InitialStateType = [];
 
 const CartContext = createContext<{
   state: InitialStateType;
